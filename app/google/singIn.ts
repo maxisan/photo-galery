@@ -1,13 +1,26 @@
-import * as AuthSession from 'expo-auth-session';
-import config from './config.json'
+import { authorize } from 'react-native-app-auth';
+import googleConfig from './config.json'
 
-const CLIENT_ID = config.installed.client_id;
-const REDIRECT_URI = AuthSession.makeRedirectUri();
+const CLIENT_ID = googleConfig.installed.client_id
+
+const config = {
+    clientId: CLIENT_ID,
+    redirectUrl: `com.googleusercontent.apps.${CLIENT_ID}:/oauth2redirect/google`,
+    scopes: ['https://www.googleapis.com/auth/photoslibrary.readonly'],
+    serviceConfiguration: {
+        authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
+        tokenEndpoint: 'https://oauth2.googleapis.com/token',
+    },
+};
 
 export async function signInWithGoogle() {
-    const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=token&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
-    // const result = await AuthSession.startAsync({ authUrl });
-    // if (result.type === 'success') {
-    //     return result.params.access_token;
-    // }
+    try {
+        const authState = await authorize(config);
+        console.log(authState.accessToken);
+
+        return authState.accessToken; // Devuelve el token de acceso
+    } catch (error) {
+        console.error('Error al iniciar sesión con Google:', error);
+        throw error;
+    }
 }
