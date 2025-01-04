@@ -6,8 +6,8 @@ const REDIRECT_URI = AuthSession.makeRedirectUri();
 
 export async function signInWithGoogle() {
     const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=token&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=https://www.googleapis.com/auth/photoslibrary.readonly`;
-    const result = await AuthSession.startAsync({ authUrl });
-    if (result.type === 'success') {
-        return result.params.access_token;
-    }
+    // const result = await AuthSession.startAsync({ authUrl });
+    // if (result.type === 'success') {
+    //     return result.params.access_token;
+    // }
 }

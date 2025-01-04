@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
-import { getMediaItems } from '@/app/lib/photos/'
 import React, { useEffect, useState } from 'react'
-import * as AuthSession from 'expo-auth-session';
+import {
+  GoogleSignin,
+  isErrorWithCode,
+  isSuccessResponse,
+  statusCodes,
+  User,
+} from '@react-native-google-signin/google-signin';
 
 type Props = {}
 
@@ -69,8 +74,8 @@ const Landing = (props: Props) => {
     const parsedAccessToken = accessToken.split('.')[1]
     console.log(parsedAccessToken)
 
-    const photosData = await getMediaItems(accessToken)
-    console.log(photosData);
+    // const photosData = await getMediaItems(accessToken)
+    // console.log(photosData);
 
   }
 
